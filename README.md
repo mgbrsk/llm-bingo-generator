@@ -6,7 +6,5 @@ Work in process
 Пример использования:
 
 ```python
-from src.pipelines.bingo_pipeline import BingoPipeline
-pipeline = BingoPipeline(model_id="deepseek-r1-distill-qwen-7b", temperature=0.7)
-pipeline.create_bingo_card(2, "Чем заняться весной")
+python main.py --cell_card_amount=4 --texts="Архитектура марса"
 ```
