@@ -1,3 +1,4 @@
+import logging
 from src.pipelines.bingo_pipeline import BingoPipeline
 
 import click
@@ -21,7 +22,18 @@ import click
     default="кот",
     help="Текст по которому генерируется карта.",
 )
-def main(model_id: str, temperature: float, cell_card_amount: int, texts: str):
+@click.option("--log_level", default="INFO", help="Уровень логирования.")
+def main(
+    model_id: str, temperature: float, cell_card_amount: int, texts: str, log_level: str
+):
+    # Инициализация логгера
+    numeric_level = getattr(logging, log_level.upper(), None)
+    if not isinstance(numeric_level, int):
+        raise ValueError(f"Недопустимый уровень логирования: {log_level}")
+    logging.basicConfig(level=numeric_level)
+
+    logging.info("Run BingoPipeline pipeline.")
+
     bingo_pipeline = BingoPipeline(model_id=model_id, temperature=temperature)
     bingo_pipeline.create_bingo_card(cell_card_amount=cell_card_amount, texts=texts)
 
